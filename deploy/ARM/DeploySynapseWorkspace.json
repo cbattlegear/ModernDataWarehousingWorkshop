@@ -30,30 +30,13 @@
             "defaultValue": {"Created with":"Synapse Azure Resource Manager deploment template"},
             "type": "Object"
         },
-        "cmkUri": {
-            "type": "String",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The uri to a key in your Key Vault to add a second layer of encryption on top of the default infrastructure encryption"
-            }
-        },
          "setSbdcRbacOnStorageAccount": {
             "type": "bool",
             "defaultValue": false
         }
     },
     "variables": {
-        "dataLakeStorageName": "[if(empty(parameters('storageAccountName')), replace(tolower(parameters('workspaceName')),'-',''), tolower(parameters('storageAccountName')))]",
-        "cmkUriStripVersion": "[if(empty(parameters('cmkUri')), '', substring(parameters('cmkUri'), 0, lastIndexOf(parameters('cmkUri'), '/')))]",
-        "withCmk": {
-            "cmk": {
-                "key": {
-                    "name": "default",
-                    "keyVaultUrl": "[variables('cmkUriStripVersion')]"
-                }
-            }
-        },
-        "encryption": "[if(empty(parameters('cmkUri')), json('{}'), variables('withCmk'))]"
+        "dataLakeStorageName": "[if(empty(parameters('storageAccountName')), replace(tolower(parameters('workspaceName')),'-',''), tolower(parameters('storageAccountName')))]"
     },
     "resources": [
         {
@@ -63,7 +46,7 @@
             "properties": {
               "mode": "Incremental",
               "templateLink": {
-                "uri": "[uri(deployment().properties.templateLink.uri, '/Azure-Samples/Synapse/master/Manage/DeployWorkspace/storage/azuredeploy.json')]",
+                "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployDataLake.json",
                 "contentVersion": "1.0.0.0"
               },
               "parameters":{
@@ -79,7 +62,7 @@
             "properties": {
               "mode": "Incremental",
               "templateLink": {
-                "uri": "[uri(deployment().properties.templateLink.uri, '/Azure-Samples/Synapse/master/Manage/DeployWorkspace/workspace/azuredeploy.json')]",
+                "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployWorkspace.json",
                 "contentVersion": "1.0.0.0"
               },
               "parameters":{
@@ -89,8 +72,7 @@
                 "setSbdcRbacOnStorageAccount":{"value": "[parameters('setSbdcRbacOnStorageAccount')]"},
                 "defaultDataLakeStorageAccountName":{"value": "[variables('dataLakeStorageName')]"},
                 "defaultDataLakeStorageFilesystemName":{"value": "[tolower(parameters('workspaceName'))]"},
-                "tagValues":{"value": "[parameters('tagValues')]"},
-                "encryption":{"value": "[variables('encryption')]"}
+                "tagValues":{"value": "[parameters('tagValues')]"}
               }
             },
             "dependsOn": [

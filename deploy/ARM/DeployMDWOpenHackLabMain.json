@@ -83,7 +83,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://openhackguides.blob.core.windows.net/mdw-templates-tmp/DeploySQLAzure.json",
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeploySQLAzure.json",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -118,7 +118,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://openhackpublic.blob.core.windows.net/modern-data-warehousing/DeploySQLVM.json",
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeploySQLVM.json",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -165,7 +165,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://openhackpublic.blob.core.windows.net/modern-data-warehousing/DeployFileVM.json",
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployFileVM.json",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -197,10 +197,7 @@
                         "value": "[parameters('CSVFictitiousCompanyNamePrefix')]"
                     }
                 }
-            },
-            "dependsOn": [
-                "deployCosmosLinkedTemplate"
-            ]
+            }
         }
     ],
     "outputs": {}

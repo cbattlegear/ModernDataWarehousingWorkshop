@@ -49,13 +49,6 @@
                 "description": "Do not change this value if Data Lake Storage is placed in the same region as Synapse Workspace(recommended)."
             }
         },
-        "encryption": {
-            "defaultValue": {},
-            "type": "Object",
-            "metadata": {
-                "description": "The encryption object containing your customer-managed key used for double encryption (optional)."
-            }
-        },
         "managedResourceGroupName": {
             "type": "string",
             "defaultValue": ""
@@ -63,10 +56,6 @@
         "setSbdcRbacOnStorageAccount": {
             "type": "bool",
             "defaultValue": false
-        },
-        "storageRoleUniqueId": {
-            "type": "string",
-            "defaultValue": "[newGuid()]"
         },
         "allowAllConnections": {
             "type": "bool",
@@ -87,7 +76,9 @@
     },
     "variables": {
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
-        "defaultDataLakeStorageAccountUrl": "[concat('https://', parameters('defaultDataLakeStorageAccountName'), '.dfs.core.windows.net')]"
+        "defaultDataLakeStorageAccountUrl": "[concat('https://', parameters('defaultDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
+        "sqlPoolName": "sqldw",
+        "sparkPoolName": "sparkpool"
     },
     "resources": [
         {
@@ -107,7 +98,6 @@
                 },
                 "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
                 "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorPassword')]",
-                "encryption": "[parameters('encryption')]",
                 "managedResourceGroupName": "[parameters('managedResourceGroupName')]"
             },
             "resources": [
@@ -146,7 +136,7 @@
                     "resources": [
                         {    
                             "type": "Microsoft.Storage/storageAccounts/blobServices/containers/providers/roleAssignments",
-                            "apiVersion": "2018-09-01-preview",
+                            "apiVersion": "2019-05-01",
                             "name": "[concat(parameters('defaultDataLakeStorageAccountName'), '/default/', parameters('defaultDataLakeStorageFilesystemName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('name'))))]",
                             "location": "[parameters('storageLocation')]",
                             "properties": {
@@ -187,7 +177,47 @@
                     ]
                 }
             }
-        }
+        },
+        {
+      "type": "Microsoft.Synapse/workspaces/sqlPools",
+      "apiVersion": "2019-06-01-preview",
+      "name": "[concat(parameters('name'), '/', variables('sqlPoolName'))]",
+      "location": "[parameters('storageLocation')]",
+      "sku": {
+        "name": "DW100c"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Synapse/workspaces/', parameters('name'))]"
+      ],
+      "properties": {
+        "createMode": "Default",
+        "collation": "SQL_Latin1_General_CP1_CI_AS"
+      }
+    },
+    {
+      "type": "Microsoft.Synapse/workspaces/bigDataPools",
+      "apiVersion": "2019-06-01-preview",
+      "name": "[concat(parameters('name'), '/', variables('sparkPoolName'))]",
+      "location": "[parameters('storageLocation')]",
+      "dependsOn": [
+        "[concat('Microsoft.Synapse/workspaces/', parameters('name'))]"
+      ],
+      "properties": {
+        "nodeCount": 5,
+        "nodeSizeFamily": "MemoryOptimized",
+        "nodeSize": "Medium",
+        "autoScale": {
+          "enabled": true,
+          "minNodeCount": 3,
+          "maxNodeCount": 10
+        },
+        "autoPause": {
+          "enabled": true,
+          "delayInMinutes": 15
+        },
+        "sparkVersion": "3.3"
+      }
+    }
     ],
     "outputs": {}
 }
