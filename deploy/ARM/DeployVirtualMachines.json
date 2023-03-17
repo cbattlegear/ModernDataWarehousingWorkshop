@@ -75,7 +75,6 @@
         "publicIpAddressType": "Dynamic",
         "publicIpAddressSku": "Basic",
         "RbacGuid": "[guid(resourceGroup().id, deployment().name)]",
-        "RbacReader": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
         "RbacContributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]"
     },
     "resources": [

@@ -113,7 +113,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "deploySqlVMLinkedTemplate",
+            "name": "deployVirtualMachinesLinkedTemplate",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -143,46 +143,11 @@
                     "BackupStorageContainerSAS": {
                         "value": "[parameters('BackupStorageContainerSAS')]"
                     },
-                    "BackupFileName": {
+                    "DatabaseBackupFileName": {
                         "value": "[parameters('RentalsBackupFileName')]"
                     },
                     "DatabaseName": {
                         "value": "[parameters('RentalsDatabaseName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "namePrefix": {
-                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "deployFileVMLinkedTemplate",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployFileVM.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "adminUsername": {
-                        "value": "[parameters('VMAdminUsername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[parameters('VMAdminPassword')]"
-                    },
-                    "BackupStorageAccountName": {
-                        "value": "[parameters('RentalsBackupStorageAccountName')]"
-                    },
-                    "BackupStorageContainerName": {
-                        "value": "[parameters('RentalsBackupStorageContainerName')]"
-                    },
-                    "BackupStorageContainerSAS": {
-                        "value": "[parameters('BackupStorageContainerSAS')]"
                     },
                     "RentalsCsvFolderName": {
                         "value": "[parameters('RentalsCsvFolderName')]"
@@ -194,7 +159,33 @@
                         "value": "[parameters('location')]"
                     },
                     "namePrefix": {
-                        "value": "[parameters('CSVFictitiousCompanyNamePrefix')]"
+                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
+                    }
+                }
+            }
+        },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "deploySynapseWorkspaceLinkedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeploySynapseWorkspace.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlAdministratorLogin": {
+                        "value": "[parameters('SqlAdminLogin')]"
+                    },
+                    "sqlAdministratorPassword": {
+                        "value": "[parameters('SqlAdminLoginPassword')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "namePrefix": {
+                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
                     }
                 }
             }

@@ -2,16 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspaceName": {
+        "namePrefix": {
             "type": "String",
             "metadata": {
                 "description": "The name of the Workspace."
-            }
-        },
-        "storageAccountName": {
-            "type": "String",
-            "metadata": {
-                "description": "The name of the primary ADLS Gen2 Storage Account. If not provided, the workspace name will be used."
             }
         },
         "sqlAdministratorLogin": {
@@ -36,7 +30,8 @@
         }
     },
     "variables": {
-        "dataLakeStorageName": "[if(empty(parameters('storageAccountName')), replace(tolower(parameters('workspaceName')),'-',''), tolower(parameters('storageAccountName')))]"
+        "workspaceName": "[concat(parameters('namePrefix'), '-ws')]",
+        "dataLakeStorageName": "[concat(parameters('namePrefix'), 'adls')]"
     },
     "resources": [
         {
@@ -51,7 +46,7 @@
               },
               "parameters":{
                 "storageAccount":{"value": "[variables('dataLakeStorageName')]"},
-                "workspaceContainer":{"value": "[tolower(parameters('workspaceName'))]"}
+                "workspaceContainer":{"value": "[tolower(variables('workspaceName'))]"}
               }
             }
         },
@@ -66,12 +61,12 @@
                 "contentVersion": "1.0.0.0"
               },
               "parameters":{
-                "name":{"value": "[tolower(parameters('workspaceName'))]"},
+                "name":{"value": "[tolower(variables('workspaceName'))]"},
                 "sqlAdministratorLogin":{"value": "[parameters('sqlAdministratorLogin')]"},
                 "sqlAdministratorPassword":{"value": "[parameters('sqlAdministratorPassword')]"},
                 "setSbdcRbacOnStorageAccount":{"value": "[parameters('setSbdcRbacOnStorageAccount')]"},
                 "defaultDataLakeStorageAccountName":{"value": "[variables('dataLakeStorageName')]"},
-                "defaultDataLakeStorageFilesystemName":{"value": "[tolower(parameters('workspaceName'))]"},
+                "defaultDataLakeStorageFilesystemName":{"value": "[tolower(variables('workspaceName'))]"},
                 "tagValues":{"value": "[parameters('tagValues')]"}
               }
             },
