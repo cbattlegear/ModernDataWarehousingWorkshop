@@ -63,11 +63,7 @@
         },
         "SQLFictitiousCompanyNamePrefix": {
             "type": "string",
-            "defaultValue": "OHDataOnPremSQL"
-        },
-        "CSVFictitiousCompanyNamePrefix": {
-            "type": "string",
-            "defaultValue": "OHDataOnPremFil"
+            "defaultValue": "OHData"
         },
         "CloudFictitiousCompanyNamePrefix": {
             "type": "string",
@@ -113,6 +109,32 @@
         },
         {
             "apiVersion": "2017-05-10",
+            "name": "deploySynapseWorkspaceLinkedTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeploySynapseWorkspace.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlAdministratorLogin": {
+                        "value": "[parameters('SqlAdminLogin')]"
+                    },
+                    "sqlAdministratorPassword": {
+                        "value": "[parameters('SqlAdminLoginPassword')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "namePrefix": {
+                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
+                    }
+                }
+            }
+        },
+         {
+            "apiVersion": "2017-05-10",
             "name": "deployVirtualMachinesLinkedTemplate",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -154,32 +176,6 @@
                     },
                     "CatalogJsonFileName": {
                         "value": "[parameters('CatalogJsonFileName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "namePrefix": {
-                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
-                    }
-                }
-            }
-        },
-         {
-            "apiVersion": "2017-05-10",
-            "name": "deploySynapseWorkspaceLinkedTemplate",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeploySynapseWorkspace.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "sqlAdministratorLogin": {
-                        "value": "[parameters('SqlAdminLogin')]"
-                    },
-                    "sqlAdministratorPassword": {
-                        "value": "[parameters('SqlAdminLoginPassword')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
