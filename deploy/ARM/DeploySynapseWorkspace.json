@@ -8,7 +8,7 @@
         },
         "sqlAdministratorLogin": {
             "type": "String",
-             "metadata": {
+            "metadata": {
                 "description": "Provide the user name for SQL login."
             }
         },
@@ -19,17 +19,17 @@
             }
         },
         "tagValues": {
-            "defaultValue": {"Created with":"Synapse Azure Resource Manager deploment template"},
+            "defaultValue": { "Created with": "Synapse Azure Resource Manager deploment template" },
             "type": "Object"
         },
-         "setSbdcRbacOnStorageAccount": {
+        "setSbdcRbacOnStorageAccount": {
             "type": "bool",
             "defaultValue": false
         }
     },
     "variables": {
         "workspaceName": "[concat(parameters('namePrefix'), '-ws')]",
-        "dataLakeStorageName": "[tolower(concat(parameters('namePrefix'), 'adls'))]"
+        "dataLakeStorageName": "[tolower(concat(parameters('namePrefix'), '-adls'))]"
     },
     "resources": [
         {
@@ -37,15 +37,15 @@
             "apiVersion": "2018-05-01",
             "name": "storage",
             "properties": {
-              "mode": "Incremental",
-              "templateLink": {
-                "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployDataLake.json",
-                "contentVersion": "1.0.0.0"
-              },
-              "parameters":{
-                "storageAccount":{"value": "[variables('dataLakeStorageName')]"},
-                "workspaceContainer":{"value": "[tolower(variables('workspaceName'))]"}
-              }
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployDataLake.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccount": { "value": "[tolower(variables('dataLakeStorageName'))]" },
+                    "workspaceContainer": { "value": "[tolower(variables('workspaceName'))]" }
+                }
             }
         },
         {
@@ -53,20 +53,20 @@
             "apiVersion": "2018-05-01",
             "name": "workspace",
             "properties": {
-              "mode": "Incremental",
-              "templateLink": {
-                "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployWorkspace.json",
-                "contentVersion": "1.0.0.0"
-              },
-              "parameters":{
-                "name":{"value": "[tolower(variables('workspaceName'))]"},
-                "sqlAdministratorLogin":{"value": "[parameters('sqlAdministratorLogin')]"},
-                "sqlAdministratorPassword":{"value": "[parameters('sqlAdministratorPassword')]"},
-                "setSbdcRbacOnStorageAccount":{"value": "[parameters('setSbdcRbacOnStorageAccount')]"},
-                "defaultDataLakeStorageAccountName":{"value": "[variables('dataLakeStorageName')]"},
-                "defaultDataLakeStorageFilesystemName":{"value": "[tolower(variables('workspaceName'))]"},
-                "tagValues":{"value": "[parameters('tagValues')]"}
-              }
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeployWorkspace.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "name": { "value": "[tolower(variables('workspaceName'))]" },
+                    "sqlAdministratorLogin": { "value": "[parameters('sqlAdministratorLogin')]" },
+                    "sqlAdministratorPassword": { "value": "[parameters('sqlAdministratorPassword')]" },
+                    "setSbdcRbacOnStorageAccount": { "value": "[parameters('setSbdcRbacOnStorageAccount')]" },
+                    "defaultDataLakeStorageAccountName": { "value": "[tolower(variables('dataLakeStorageName'))]" },
+                    "defaultDataLakeStorageFilesystemName": { "value": "[tolower(variables('workspaceName'))]" },
+                    "tagValues": { "value": "[parameters('tagValues')]" }
+                }
             },
             "dependsOn": [
                 "storage"

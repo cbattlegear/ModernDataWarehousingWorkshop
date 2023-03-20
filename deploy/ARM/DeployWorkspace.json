@@ -76,7 +76,7 @@
     },
     "variables": {
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
-        "defaultDataLakeStorageAccountUrl": "[concat('https://', parameters('defaultDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
+        "defaultDataLakeStorageAccountUrl": "[concat('https://', tolower(parameters('defaultDataLakeStorageAccountName')), '.dfs.core.windows.net')]",
         "sqlPoolName": "sqldw",
         "sparkPoolName": "sparkpool"
     },
@@ -137,7 +137,7 @@
                         {    
                             "type": "Microsoft.Storage/storageAccounts/blobServices/containers/providers/roleAssignments",
                             "apiVersion": "2019-05-01",
-                            "name": "[concat(parameters('defaultDataLakeStorageAccountName'), '/default/', parameters('defaultDataLakeStorageFilesystemName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('name'))))]",
+                            "name": "[concat(tolower(parameters('defaultDataLakeStorageAccountName')), '/default/', parameters('defaultDataLakeStorageFilesystemName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('name'))))]",
                             "location": "[parameters('storageLocation')]",
                             "properties": {
                                 "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleID'))]",
@@ -168,7 +168,7 @@
                     "resources": [
                         {
                             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-                            "name": "[concat(parameters('defaultDataLakeStorageAccountName'), '/default/', parameters('defaultDataLakeStorageFilesystemName'))]",
+                            "name": "[concat(tolower(parameters('defaultDataLakeStorageAccountName')), '/default/', parameters('defaultDataLakeStorageFilesystemName'))]",
                             "apiVersion": "2018-02-01",
                             "properties": {
                                 "publicAccess": "None"
