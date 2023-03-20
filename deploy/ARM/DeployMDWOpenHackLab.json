@@ -56,10 +56,6 @@
             "type": "string",
             "defaultValue": "[resourceGroup().location]"
         },
-        "SQLFictitiousCompanyNamePrefix": {
-            "type": "string",
-            "defaultValue": "VanArsdelLtd"
-        },
         "CloudFictitiousCompanyNamePrefix": {
             "type": "string",
             "defaultValue": "southridge"
@@ -116,9 +112,6 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
-                    },
-                    "SQLFictitiousCompanyNamePrefix": {
-                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
                     },
                     "CloudFictitiousCompanyNamePrefix": {
                         "value": "[parameters('CloudFictitiousCompanyNamePrefix')]"

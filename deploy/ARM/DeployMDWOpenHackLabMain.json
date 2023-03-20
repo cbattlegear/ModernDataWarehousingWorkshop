@@ -61,10 +61,6 @@
             "type": "string",
             "defaultValue": "[resourceGroup().location]"
         },
-        "SQLFictitiousCompanyNamePrefix": {
-            "type": "string",
-            "defaultValue": "OHData"
-        },
         "CloudFictitiousCompanyNamePrefix": {
             "type": "string",
             "defaultValue": "ohmdw"
@@ -115,7 +111,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "https://raw.githubusercontent.com/cbattlegear/ModernDataWarehousingWorkshop/master/deploy/ARM/DeploySynapseWorkspace.json",
-                    "contentVersion": "1.0.0.0"
+                    "contentVersion": "1.1.0.0"
                 },
                 "parameters": {
                     "sqlAdministratorLogin": {
@@ -125,7 +121,7 @@
                         "value": "[parameters('SqlAdminLoginPassword')]"
                     },
                     "namePrefix": {
-                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
+                        "value": "[parameters('CloudFictitiousCompanyNamePrefix')]"
                     }
                 }
             }
@@ -178,7 +174,7 @@
                         "value": "[parameters('location')]"
                     },
                     "namePrefix": {
-                        "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
+                        "value": "[parameters('CloudFictitiousCompanyNamePrefix')]"
                     }
                 }
             }
