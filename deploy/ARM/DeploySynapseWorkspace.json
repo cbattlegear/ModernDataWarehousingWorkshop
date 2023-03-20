@@ -29,7 +29,7 @@
     },
     "variables": {
         "workspaceName": "[concat(parameters('namePrefix'), '-ws')]",
-        "dataLakeStorageName": "[tolower(concat(parameters('namePrefix'), '-adls'))]"
+        "dataLakeStorageName": "[tolower(concat(parameters('namePrefix'), 'adls'))]"
     },
     "resources": [
         {
