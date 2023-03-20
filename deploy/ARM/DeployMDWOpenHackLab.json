@@ -60,10 +60,6 @@
             "type": "string",
             "defaultValue": "VanArsdelLtd"
         },
-        "CSVFictitiousCompanyNamePrefix": {
-            "type": "string",
-            "defaultValue": "FourthCoffee"
-        },
         "CloudFictitiousCompanyNamePrefix": {
             "type": "string",
             "defaultValue": "southridge"
@@ -123,9 +119,6 @@
                     },
                     "SQLFictitiousCompanyNamePrefix": {
                         "value": "[parameters('SQLFictitiousCompanyNamePrefix')]"
-                    },
-                    "CSVFictitiousCompanyNamePrefix": {
-                        "value": "[parameters('CSVFictitiousCompanyNamePrefix')]"
                     },
                     "CloudFictitiousCompanyNamePrefix": {
                         "value": "[parameters('CloudFictitiousCompanyNamePrefix')]"

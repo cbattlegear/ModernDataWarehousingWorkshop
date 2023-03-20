@@ -9,7 +9,9 @@
             "type": "string"
         }
     },
-    "variables": {},
+    "variables": {
+        
+    },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
